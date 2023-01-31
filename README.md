@@ -9,3 +9,6 @@ mid point location = left point location + distance->(right - left)//2    //prev
 right = mid - 1; left = mid + 1// ensure search window gets shorter
 
 special condition to be considered: if left == right and nums[mid] != target , if rewrite right = mid left = mid, then search window doesn't get shorter and becomes dead loop.
+
+X^2^
+H~2~O
