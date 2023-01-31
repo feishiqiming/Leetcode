@@ -1,5 +1,5 @@
 # Leetcode
-##704. Binary Search
+## 704. Binary Search
 
 abstract: consider nums = [2], so while condition left <= right instead of left < right, also to avoid dead loop, right = mid -1, left = mid + 1.
 
