@@ -10,7 +10,7 @@ right = mid - 1; left = mid + 1// ensure search window gets shorter
 
 special condition to be considered: if left == right and nums[mid] != target , if rewrite right = mid left = mid, then search window doesn't get shorter and becomes dead loop.
 
-## 704. Binary Search
+## 51. N-Queens
 ```python
 
 class Solution:
@@ -58,3 +58,8 @@ class Solution:
         return res
 
 ```
+
+## 155. Min Stack
+
+### Abstract: 
+### maintain 2 stacks, 1 is a normal stack, another is a stack containning the minimum value that far.
