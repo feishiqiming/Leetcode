@@ -144,3 +144,50 @@ class Solution {
 
 ```
 
+## 79. Word Search
+
+### Abstract: 
+### Similar to Q200,DFS using recursion,bounding function-out of bounds, reach unmatched letter, reach the nodes visited previously.
+### Before each search, we should restore the origin board.
+
+```Java
+class Solution {
+    public boolean res;
+    public void dfs(char[][] board,int i,int j, String word,int word_i){
+        //越界退出
+        if(i<0||j<0||i>=board.length||j>=board[i].length) return;
+        //
+        if(word.charAt(word_i)!=board[i][j]) return;
+        
+        else{
+            if(word_i==word.length()-1){
+                this.res = true;
+                return;
+            }
+            char temp =  board[i][j];
+            board[i][j] = '~';
+            dfs(board,i+1,j,word,word_i+1);
+            dfs(board,i,j+1,word,word_i+1);
+            dfs(board,i-1,j,word,word_i+1);
+            dfs(board,i,j-1,word,word_i+1);
+            //restore the origin board
+            board[i][j] = temp;
+        }
+    }
+    public boolean exist(char[][] board, String word) {
+        this.res = false;
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[i].length;j++){
+                if(board[i][j]==word.charAt(0)){
+                    dfs(board,i,j,word,0);
+                } 
+                if(this.res==true) return true;
+            }
+        }
+        return false;
+
+    }
+}
+
+
+```
