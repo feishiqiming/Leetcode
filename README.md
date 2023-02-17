@@ -68,3 +68,29 @@ class Solution:
 
 ### Abstract: 
 ### Stack- If int then push,if operator then pop a number as B,then pop a number as A, push A 'operator' B
+
+
+## 22. Generate Parentheses
+
+### Abstract: 
+### DFS using recursion
+
+```python
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        def dfs(temp:str,l:int,r:int,n:int):
+            #reach unsuccessful nodes
+            if(l>n or r>n or r>l):
+                return
+            #reach successful nodes
+            if(l == n and r == n):
+                res.append(temp)
+                return
+            dfs(temp+'(',l+1,r,n)
+            dfs(temp+')',l,r+1,n)
+        dfs('',0,0,n)
+        return res    
+
+```
+
