@@ -191,3 +191,41 @@ class Solution {
 
 
 ```
+## 678. Valid Parenthesis String
+### Abstract: 
+### 
+
+
+```Java
+
+class Solution {
+    public boolean checkValidString(String s) {
+        if(s=="") return true;
+        //low代表未匹配左括号最少的情况
+        int low = 0;
+        //high代表未匹配左括号最多的情况
+        int high = 0;
+        for(int i = 0;i<s.length();i++){
+            if(s.charAt(i)=='('){
+                low++;
+                high++;
+            } 
+            else if(s.charAt(i)==')'){
+                low--;
+                high--;
+
+            } 
+            else if(s.charAt(i)=='*'){
+                low--;
+                high++;
+            } 
+            if(high<0) return false;
+            if(low<0) low=0;
+        }
+        
+        return low==0;
+
+    }
+}
+
+```
