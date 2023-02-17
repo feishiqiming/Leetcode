@@ -60,15 +60,18 @@ class Solution:
 
 ```
 
+
 ## 155. Min Stack
 
 ### Abstract: 
 ### maintain 2 stacks, 1 is a normal stack, another is a stack containning the minimum value that far.
 
+
 ## 150. Evaluate Reverse Polish Notation
 
 ### Abstract: 
 ### Stack- If int then push,if operator then pop a number as B,then pop a number as A, push A 'operator' B
+
 
 
 ## 22. Generate Parentheses
@@ -95,6 +98,7 @@ class Solution:
         return res    
 
 ```
+
 
 ## 200. Number of Islands
 
