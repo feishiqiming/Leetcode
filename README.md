@@ -119,12 +119,15 @@ class Solution {
 
     }
     public void dfs(char[][] grid,int i,int j){
+    
         //out of bounds
         if(j>=grid[0].length||i>=grid.length||i<0||j<0) return;
+        
         //reach water or previously visited nodes
         if(grid[i][j] == '2'||grid[i][j] == '0'){
             return;
         }
+        
         //mark the node as visited
         else if(grid[i][j] == '1') grid[i][j] = '2'; 
         
