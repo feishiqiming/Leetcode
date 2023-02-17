@@ -11,6 +11,7 @@ right = mid - 1; left = mid + 1// ensure search window gets shorter
 special condition to be considered: if left == right and nums[mid] != target , if rewrite right = mid left = mid, then search window doesn't get shorter and becomes dead loop.
 
 ## 51. N-Queens
+Python code:
 ```python
 
 class Solution:
@@ -75,6 +76,7 @@ class Solution:
 ### Abstract: 
 ### DFS using recursion
 
+Python code:
 ```python
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
@@ -91,6 +93,47 @@ class Solution:
             dfs(temp+')',l,r+1,n)
         dfs('',0,0,n)
         return res    
+
+```
+
+## 200. Number of Islands
+
+### Abstract: 
+### DFS using recursion,bounding function-out of bounds, reach the water 0, reach the nodes visited previously.
+### The main difference between graph traversal and tree traversal -> graph traversal may visit a same node twice.
+
+Java code:
+```Java
+class Solution {
+    public int numIslands(char[][] grid) {
+        int res = 0;
+        for(int i = 0;i<grid.length;i++){
+           for(int j = 0;j<grid[0].length;j++){
+               if(grid[i][j]=='1'){
+                   dfs(grid,i,j);
+                   res++;
+               }
+           } 
+        }
+        return res;
+
+    }
+    public void dfs(char[][] grid,int i,int j){
+        //out of bounds
+        if(j>=grid[0].length||i>=grid.length||i<0||j<0) return;
+        //reach water or previously visited nodes
+        if(grid[i][j] == '2'||grid[i][j] == '0'){
+            return;
+        }
+        //mark the node as visited
+        else if(grid[i][j] == '1') grid[i][j] = '2'; 
+        
+        dfs(grid,i,j+1);
+        dfs(grid,i,j-1);
+        dfs(grid,i+1,j);
+        dfs(grid,i-1,j);
+    }
+}
 
 ```
 
