@@ -229,3 +229,38 @@ class Solution {
 }
 
 ```
+
+## 494. Target Sum
+### Abstract: 2D DP, can be converted to Knapsack problem.
+### we assume all numbers are postive. And drop certain numbers to reach the difference.
+### whenever drop certain numbers, we turn positive to negative, that is 2*num.
+### The problem is converted to select some numbers to reach a new target(difference/2).
+### we use 1d array, to prevent it from readding, we add from the back.
+
+```Java
+class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum=0;
+        for(int num:nums){
+            sum += num;
+        }
+        int diff = sum - target;
+        if(diff<0||diff%2!=0) return 0;
+        //至此，问题转化成选择填入num满足new_target
+        int new_target = diff/2;
+        int[] dp = new int[new_target+1];
+        dp[0] = 1;
+        for(int num:nums){
+            //add from the back
+            for(int j = new_target;j>=num;j--){
+                dp[j] += dp[j-num];
+            }
+        }
+
+
+        return dp[new_target];
+    }
+}
+
+```
+
