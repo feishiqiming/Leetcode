@@ -263,4 +263,32 @@ class Solution {
 }
 
 ```
+## 1049. Last Stone Weight II
+### Abstract: 2D DP, can be converted to Knapsack problem.
+### Finally, the result = a pile of stones(+) crash another pile(-).
+### The problem is to select certain pile(-) to approach sum/2. So that +pile close to sum/s. The last stone weight is the smallest.
+### dp[i] = using stones so far, the biggest achieveable weight smaller than i.
 
+```Java
+class Solution {
+    public int lastStoneWeightII(int[] stones) {
+        int sum=0;
+        for(int num:stones){
+            sum += num;
+        }
+        int halfSum = sum/2;
+        //dp[i]代表不超过i的最大重量
+        int[] dp = new int[halfSum+1];
+        for(int num:stones){
+            for (int i=halfSum;i>=num;i--) {
+            dp[i] = Math.max(dp[i],dp[i-num]+num);
+            }
+            
+        }
+        
+        return sum - 2*dp[halfSum];
+
+    }
+}
+
+```
