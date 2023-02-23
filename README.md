@@ -292,3 +292,25 @@ class Solution {
 }
 
 ```
+
+## 322. Coin Change
+### Abstract: DP, can be converted to repeatable Knapsack problem.
+### dp record the min times to reach i.
+```Java
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount==0) return 0;
+        int [] dp = new int[amount+1];
+        Arrays.fill(dp,amount+1);
+        dp[0] = 0;
+        for(int coin:coins){
+            for(int i=0;i<amount+1;i++){
+                if(i>=coin)dp[i] = Math.min(dp[i],dp[i-coin]+1);
+            }
+                       
+        }
+        //System.out.println(dp[amount]);
+        return dp[amount]==amount+1?-1: dp[amount];
+    }
+}
+```
