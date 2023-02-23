@@ -314,3 +314,35 @@ class Solution {
     }
 }
 ```
+
+## 621. Task Scheduler
+### Abstract: Greedy
+### 2 sub problems->if many different tasks,then time is tasks.length. If not enough, then we schedule them as AXXAXXA(assume A appears the most,X can be cool down or a task), then time = (max-1)*(n+1)+1? what if B appears the same as A.
+### We schedule ABXABXAB, then time = (max-1)*(n+1)+max_count
+
+```Java
+
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        if(n==0) return tasks.length;
+        int[] count = new int[26];
+        for(char task:tasks){
+            count[task-'A']++;
+        }
+        int max = 0;
+        int max_count = 0;
+        for(int i = 0;i<count.length;i++){
+            if(count[i]>max){
+                max = count[i];
+                max_count = 1;
+            }
+            else if(count[i]==max){
+                max_count++;
+            }
+        }
+        return Math.max((max-1)*(n+1)+max_count,tasks.length);
+
+    }
+}
+
+```
