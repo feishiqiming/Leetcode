@@ -374,3 +374,22 @@ class Solution {
     }
 }
 ```
+
+## 236. Lowest Common Ancestor of a Binary Tree
+### Abstract: consider root node - If root==q or p,then it is LCA. If left and right subtrees both found, then it is LCA. Else if only found in the left subtree, the first found node in the left subtree is LCA.
+
+```Java
+class Solution {  
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root==null) return null;
+        if(root==p||root==q) return root;
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+        if(left!=null&&right!=null) return root;
+        if(left!=null) return left;
+        if(right!=null) return right;
+        else return null;    
+    }
+}
+
+```
