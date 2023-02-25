@@ -393,3 +393,28 @@ class Solution {
 }
 
 ```
+## 207. Course Schedule
+
+```Java
+//这个只适用于一个前置课程
+public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int [] graph = new int[numCourses];
+        Arrays.fill(graph,-1);
+        for(int i=0;i<prerequisites.length;i++){
+            graph[prerequisites[i][1]] = prerequisites[i][0];
+        }
+        for(int i=0;i<graph.length;i++){
+            int slow = i;
+            int fast = i;
+            while(fast!=-1){
+                slow = graph[slow];
+                if(graph[fast]==-1) break;
+                fast = graph[graph[fast]];
+                if(fast==slow) return false;
+            }
+        }
+        return true;
+
+
+    }
+```
