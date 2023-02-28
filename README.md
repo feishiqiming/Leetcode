@@ -435,7 +435,11 @@ class Solution {
 ## 332. Reconstruct Itinerary
 ### Abstract: Map problem as well. HashMap record every departure and its Arrivals. Arrivals should be tried in order, we use priority q.
 ### Thinking in greedy method, if we have no else place to go, this is the end of the path. For example, we go through a path which has not covered all the tickets, then it should be in the last, if it is a correct path it should be in the last as well.
+补充一些正确性的理解：
 
+按照贪心的方式走，如果走到一个点，发现无法继续走了，并且还有某条边没有走过。则说明之前某一个分岔点上走错了，提前进入了一条无法回头的路。应该先走其它边，最后再走这一条无法回头的路。
+
+把这段已知的无法回头的路去掉，则是一个更小的图。我们假想对这个小的图如何走，起点还是和原来一样，终点必然是刚刚的分岔点（因为分岔点不是终点，其原来的度数原来为偶数，去掉一条边后度数为奇数。）。在这个小的图上得到自然排序最小的答案后，再在最后添加上刚刚去掉的那一段，则是大图上的结果。
 ```Java
 class Solution {
     List<String> res = new ArrayList<>();
