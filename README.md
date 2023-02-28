@@ -394,27 +394,73 @@ class Solution {
 
 ```
 ## 207. Course Schedule
-
+### Abstract: topology sort, use HashMap record the mapping relation,1 to many. where to start? we start from the courses without prerequisites, that is inDegree = 0.
+### So we record the inDegree of every course. learn basic course, unlock new course when its inDegree decrease to 0.
 ```Java
-//这个只适用于一个前置课程
-public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int [] graph = new int[numCourses];
-        Arrays.fill(graph,-1);
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int [] inDegree = new int[numCourses];
+        HashMap<Integer,List<Integer>> unlock = new HashMap<>();
+        //Arrays.fill(graph,-1);
         for(int i=0;i<prerequisites.length;i++){
-            graph[prerequisites[i][1]] = prerequisites[i][0];
+            int key = prerequisites[i][1];
+            int value = prerequisites[i][0];
+            inDegree[value]++;
+            if(!unlock.containsKey(key)){
+                List<Integer> newList = new ArrayList<Integer>();
+                newList.add(value);
+                unlock.put(key,newList);
+            } 
+            else unlock.get(key).add(value);
         }
-        for(int i=0;i<graph.length;i++){
-            int slow = i;
-            int fast = i;
-            while(fast!=-1){
-                slow = graph[slow];
-                if(graph[fast]==-1) break;
-                fast = graph[graph[fast]];
-                if(fast==slow) return false;
-            }
+        Queue<Integer> zeroQ = new LinkedList<>();
+        for(int i=0;i<inDegree.length;i++){
+            if(inDegree[i]==0) zeroQ.offer(i);
         }
-        return true;
+        int count = 0;
+        while(!zeroQ.isEmpty()){
+            int course = zeroQ.poll();
+            count++;
+            if(!unlock.containsKey(course)) continue;
+            for(Integer c:unlock.get(course)){
+                if(--inDegree[c]==0) zeroQ.offer(c);
+            }  
+        }
+        return numCourses==count;
 
 
     }
+}
+```
+## 332. Reconstruct Itinerary
+### Abstract: Map problem as well. HashMap record every departure and its Arrivals. Arrivals should be tried in order, we use priority q.
+### Thinking in greedy method, if we have no else place to go, this is the end of the path. For example, we go through a path which has not covered all the tickets, then it should be in the last, if it is a correct path it should be in the last as well.
+
+```Java
+class Solution {
+    List<String> res = new ArrayList<>();
+    Map<String,PriorityQueue<String>> map = new HashMap<>();
+    public List<String> findItinerary(List<List<String>> tickets) {
+        for (List<String> ticket: tickets) {
+            String from = ticket.get(0), to = ticket.get(1);
+            PriorityQueue<String> queue = map.get(from);
+            if (queue == null) {
+                queue = new PriorityQueue<>();
+                map.put(from, queue);
+            }
+            queue.offer(to);
+        }
+        dfs("JFK");
+        return res;
+    }
+
+    private void dfs(String from) {
+        PriorityQueue<String> tos = map.get(from);
+        while (tos != null && tos.size() > 0) {
+            dfs(tos.poll());
+        }
+        res.add(0,from);
+    }
+
+}
 ```
