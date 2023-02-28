@@ -468,3 +468,32 @@ class Solution {
 
 }
 ```
+## 684. Redundant Connection
+### Abstract: Union-Find set. Firstly, every node is a seperate disjoint set. By reading edges, we merge seperate set.(Each set has a root node, every element treats it as a symbol of their set.) So, when 2 nodes in a edge is in the same set(they have the same symbol), this edge is a redundant connection.
+```Java
+class Solution {
+    int[] set;
+    public int find(int u){
+        if(u==set[u]) return u;
+        set[u] = find(set[u]);
+        return set[u];       
+    }
+
+    public int[] findRedundantConnection(int[][] edges) {
+        int[] res = new int[2];
+        set = new int[edges.length+1];
+        for(int i = 0;i<set.length;i++){
+            set[i] = i;
+        }
+        for(int i=0;i<edges.length;i++){
+            int node0 = find(edges[i][0]);
+            int node1 = find(edges[i][1]);
+            if(node0==node1) return edges[i];
+            else set[node0] = node1;
+          
+        }
+        
+        return res;
+    }
+}
+```
