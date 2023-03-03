@@ -497,3 +497,51 @@ class Solution {
     }
 }
 ```
+## 450. Delete Node in a BST
+
+```Java
+class Solution {
+    public TreeNode findReplace(TreeNode del,TreeNode cur,boolean right){
+        if(right){
+            if(cur.right==null){
+                del.val = cur.val;
+                return cur.left;
+            }
+            else{
+                cur.right = findReplace(del,cur.right,right);
+            } 
+        }
+        else{
+            if(cur.left==null){
+                del.val = cur.val;
+                return cur.right;
+            }
+            else{
+                cur.left = findReplace(del,cur.left,right);
+            } 
+
+        }
+        return cur;
+    }
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null) return null;
+        int val = root.val;
+        if(val == key){
+            int tmp = root.val;
+            if(root.left!=null){
+                root.left = findReplace(root,root.left,true);
+            }
+            else if(root.right!=null){
+                root.right = findReplace(root,root.right,false);
+            }
+            else{
+                return null;
+            }
+        }
+        else if(val > key) root.left=deleteNode(root.left,key);
+        else root.right=deleteNode(root.right,key);
+        return root;
+
+    }
+}
+```
