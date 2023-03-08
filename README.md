@@ -545,3 +545,25 @@ class Solution {
     }
 }
 ```
+
+## 84. Largest Rectangle in Histogram
+```Java
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int[] temp = new int[heights.length+2];
+        System.arraycopy(heights,0,temp,1,heights.length);
+        Deque<Integer> stack = new ArrayDeque<>();
+        int res = 0;
+        for(int i=0;i<temp.length;i++){
+            while(!stack.isEmpty()&& temp[stack.peek()]>temp[i]){
+                int h = temp[stack.pop()];
+                //直到上一个元素，但不包括上一个元素
+                int width = i-stack.peek()-1;
+                res = Math.max(res,h*width);
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+}
+```
