@@ -650,3 +650,32 @@ class Solution {
     }
 }
 ```
+## 763. Partition Labels
+```Java
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        int [] last = new int[26];
+        int length = s.length();
+        //record last present index
+        for(int i=0;i<length;i++){
+            last[s.charAt(i)-'a'] = i;
+        }
+        List<Integer> res = new ArrayList<Integer>();
+        //greedy, read and update current substring's end until we can reach the end. This is the shortest substring we can get.
+        for(int i=0;i<length;i++){
+            int end = last[s.charAt(i)-'a'];
+            for(int j = i+1;j<end;j++){
+                int newEnd = last[s.charAt(j)-'a'];
+                end = Math.max(end,newEnd);
+            }
+            res.add(end-i+1);
+            i = end;
+        }
+        
+        
+        
+        return res;
+
+    }
+}
+```
