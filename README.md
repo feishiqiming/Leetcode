@@ -614,3 +614,39 @@ class Solution {
     }
 }
 ```
+
+## 2379. Minimum Recolors to Get K Consecutive Black Blocks
+### Fixed-size sliding window
+
+```Java
+class Solution {
+    public int minimumRecolors(String blocks, int k) {
+        int length = blocks.length();
+        int l = 0;
+        int r = 0;   
+        int count = 0;
+        for(;r<k;r++){
+            if(blocks.charAt(r)=='W'){
+                count++;
+            }
+        }
+        int res = count;
+        for(;r<length;l++,r++){
+            if(blocks.charAt(r)=='B'&&blocks.charAt(l)=='W'){
+                count--;
+                res = Math.min(res,count); 
+            }
+            if(blocks.charAt(r)=='W'&&blocks.charAt(l)=='B'){
+                count++;
+            }
+             
+
+        }
+        
+        
+        
+        return res;
+
+    }
+}
+```
