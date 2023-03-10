@@ -679,3 +679,34 @@ class Solution {
     }
 }
 ```
+
+## 1590. [Make Sum Divisible by P]([https://link-url-here.org](https://leetcode.cn/problems/make-sum-divisible-by-p/))
+### prefix sum + Hashmap. We should delete a min straight subset. subset have left index and right index. so we have a previous subset [0,left-1], a back subset [right + 1,end]. Total remainder -> sum, so we delete a subset with remainder = sum, then it is divisible. subset remainder = [0,right+1] remainder - [0,left-1] remainder = sum.
+```Java
+
+class Solution {
+    public int minSubarray(int[] nums, int p) {
+        int sum = 0;
+        for(int num:nums){
+            sum = (sum+num)%p;
+        }
+        if(sum==0) return 0;
+        Map<Integer,Integer> last = new HashMap<>();
+        // you can delete all, previous subset is empty, its sum is 0,index is -1
+        last.put(0,-1); 
+        int res = nums.length;
+        int cur = 0;
+        for(int i=0;i<nums.length;i++){
+            //right remainder
+            cur = (cur + nums[i])%p;
+            // do we have correct left remainder target?
+            int target = (cur - sum + p)%p;
+            if(last.containsKey(target)) res = Math.min(res,i-last.get(target));
+            last.put(cur,i);
+        }
+        return res == nums.length?-1:res;
+        
+
+    }
+} 
+```
