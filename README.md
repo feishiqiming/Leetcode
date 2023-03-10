@@ -680,8 +680,9 @@ class Solution {
 }
 ```
 
-## 1590. [Make Sum Divisible by P]([https://link-url-here.org](https://leetcode.cn/problems/make-sum-divisible-by-p/))
-### prefix sum + Hashmap. We should delete a min straight subset. subset have left index and right index. so we have a previous subset [0,left-1], a back subset [right + 1,end]. Total remainder -> sum, so we delete a subset with remainder = sum, then it is divisible. subset remainder = [0,right+1] remainder - [0,left-1] remainder = sum.
+## [1590. Make Sum Divisible by P](https://leetcode.cn/problems/make-sum-divisible-by-p/)
+### prefix sum + Hashmap. 
+### We should delete a min straight subset. subset have left index and right index. so we have a previous subset [0,left-1], a back subset [right + 1,end]. Total remainder -> sum, so we delete a subset with remainder = sum, then it is divisible. subset remainder = [0,right+1] remainder - [0,left-1] remainder = sum.
 ```Java
 
 class Solution {
