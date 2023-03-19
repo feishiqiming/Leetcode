@@ -711,3 +711,33 @@ class Solution {
     }
 } 
 ```
+
+## [6325. Minimum Time to Repair Cars](https://leetcode.cn/problems/minimum-time-to-repair-cars/)
+### Binary Search for a valid answer. 
+
+```Java
+class Solution {
+    public long repairCars(int[] ranks, int cars) {
+        int minR = ranks[0];
+        for(int rank:ranks) minR = Math.min(minR,rank);
+        long left = 0;
+        //这里错了一次，不强转会溢出
+        long right = (long)minR*cars*cars;
+        //System.out.println(cars*cars);
+        //long res = right;
+        while(left<=right){
+            long mid = left + (right-left)/2;
+            long carsRepaired = 0;
+            //mid/rank 得到double，再开根号还是double，向下取整加入long
+            for(int rank:ranks) carsRepaired += Math.sqrt(mid/rank);
+            if(carsRepaired>=cars){
+                right = mid-1;
+            }  
+            else left = mid+1;
+        }
+        //right+1是一个成功全修的案例
+        return right+1;
+    }
+}
+
+```
