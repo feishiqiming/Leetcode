@@ -741,3 +741,106 @@ class Solution {
 }
 
 ```
+## [146. LRU Cache](https://leetcode.cn/problems/lru-cache/)
+### query - HashMap 
+### add and delete - DoubleLinkedList
+### combine - LinkedHashMap
+```Java
+class LRUCache {
+    HashMap<Integer,Node> map;
+    LinkedList2 cache;
+    int capacity;
+    class Node{
+        public Node prev,next;
+        public int key,value;
+        public Node(int k, int v){
+            this.key = k;
+            this.value = v;
+        }
+    }
+    class LinkedList2{
+        private Node head,tail;
+        private int size;
+        public LinkedList2(){
+            size = 0;
+            head = new Node(0,0);
+            tail = new Node(0,0);
+            head.next = tail;
+            tail.prev = head;
+        }
+        public void addLast(Node x){
+            Node last = tail.prev;
+            last.next = x;
+            x.prev = last;
+            x.next = tail;
+            tail.prev = x;
+            size++;
+        }
+        public void remove(Node x){
+            x.prev.next = x.next;
+            x.next.prev = x.prev;
+            size--;
+        }
+
+        public Node removeFirst(){
+            if(head.next==tail) return null;
+            Node first = head.next;
+            remove(first);
+            return first;
+        }
+    }
+
+    public LRUCache(int capacity) {
+        map = new HashMap<>();
+        cache = new LinkedList2();
+        this.capacity = capacity;
+    }
+    public void toRecently(int key){
+        Node x = map.get(key);
+        cache.remove(x);
+        cache.addLast(x);
+    }
+    public void delete(int key){
+        Node x = map.get(key);
+        map.remove(key);
+        cache.remove(x);
+    }
+    public void addRecent(int key,int value){
+        Node x = new Node(key,value);
+        map.put(key,x);
+        cache.addLast(x);
+    }
+    public void removeLR(){
+        Node lr = cache.removeFirst();
+        int lrkey = lr.key;
+        map.remove(lrkey);
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        toRecently(key);
+        return map.get(key).value;
+
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+            delete(key);
+            addRecent(key,value);
+        }
+        else{
+            if(cache.size>=capacity) removeLR();
+            addRecent(key,value);
+        }
+
+
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
