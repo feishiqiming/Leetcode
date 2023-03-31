@@ -844,3 +844,41 @@ class LRUCache {
  * obj.put(key,value);
  */
 ```
+
+## [15. 3Sum](https://leetcode.cn/problems/3sum/)
+
+```Java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        int left =0;
+        int right = nums.length-1;
+        for(int i=0;i<nums.length-2;i++){
+            if(nums[i]>0) break;
+            if(i-1>=0&&nums[i]==nums[i-1]) continue;
+            int target = nums[i];
+            left = i+1;
+            right = nums.length-1;
+            while(right>left){
+                if(nums[left]+nums[right]==-target){
+                   res.add(Arrays.asList(target,nums[left],nums[right]));
+                   int dBound = nums[left];
+                   int uBound = nums[right];
+                   while(right>left&&nums[left]==dBound) left++;
+                   while(right>left&&nums[right]==uBound) right--;
+                }
+                else if(nums[left]+nums[right]+target>0){
+                    right--;
+                }
+                else{
+                    left++;
+                }
+            }
+
+        }
+        return res;
+
+    }
+}
+```
